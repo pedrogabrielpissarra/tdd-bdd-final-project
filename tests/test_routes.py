@@ -280,3 +280,14 @@ class TestProductRoutes(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.get_json()
         self.assertEqual(len(data), 5)
+
+    def test_update_product_not_found(self):
+        """It should not Update a Product thats not found"""
+        fake_product = ProductFactory()
+        response = self.client.put(f"{BASE_URL}/999999", json=fake_product.serialize())
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_method_not_allowed(self):
+        """It should return 405 Method Not Allowed"""
+        response = self.client.put("/")  # rota raiz não aceita PUT
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)

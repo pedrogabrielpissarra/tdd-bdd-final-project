@@ -92,8 +92,9 @@ def create_products():
     # Uncomment this line of code once you implement READ A PRODUCT
     #
     # location_url = url_for("get_products", product_id=product.id, _external=True)
-    location_url = "/"  # delete once READ is implemented
+    location_url = url_for("get_products", product_id=product.id, _external=True)
     return jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
+
 
 
 ######################################################################
@@ -172,7 +173,9 @@ def update_products(product_id):
     product.deserialize(request.get_json())
     product.id = product_id
     product.update()
-    return product.serialize(), status.HTTP_200_OK#
+    return product.serialize(), status.HTTP_200_OK
+
+
 
 ######################################################################
 # D E L E T E   A   P R O D U C T
